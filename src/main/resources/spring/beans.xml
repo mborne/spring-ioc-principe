@@ -1,0 +1,42 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<!-- Création d'un objet "queue"  -->
+	<bean id="queue" class="java.util.concurrent.ArrayBlockingQueue">
+		<constructor-arg index="0" type="int" value="5" />
+	</bean>
+	
+	<!-- 
+		Création d'un objet "consumer" avec injection de la "queue" par
+		appel au construction.
+		Appel à la méthode start du Thread à l'initialisation, interrupt à la destruction.
+	 -->
+	<bean id="consumer" 
+        class="org.acme.ioc.Consumer" 
+        init-method="start" 
+        destroy-method="interrupt"
+    >
+		<property name="queue" ref="queue"></property>
+	</bean>
+
+	<!-- 
+		Même principe pour producer
+	 -->
+	<bean id="producer" 
+        class="org.acme.ioc.Producer"
+        init-method="start"
+        destroy-method="interrupt"
+    >
+		<property name="queue" ref="queue"></property>
+	</bean>
+	
+	<!-- 
+		Création de la fenêtre
+	-->
+	<bean id="window" class="org.acme.ioc.Window">
+		<constructor-arg index="0" ref="queue" />
+	</bean>
+	
+</beans>

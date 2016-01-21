@@ -1,4 +1,4 @@
-# Illustration du principe d'injection de dépendances avec Spring
+# Illustration du principe d'inversion de contrôle
 
 Cadre : Présentation des patrons de conception (se référer à des ressources dédiées pour apprendre Spring).
 

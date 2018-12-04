@@ -29,7 +29,7 @@ Mieux : On veut démarrer les Thread au démarrage de l'application.
 
 Un contexte spring ApplicationContext (qui hérite de BeanFactory) est initialisé à l'aide d'un fichier XML qui fait partie des ressources du programme :
 
-```
+```java
 // Initialisation du contexte spring
 @SuppressWarnings("resource")
 ApplicationContext context = new ClassPathXmlApplicationContext("/spring/beans.xml");
@@ -39,7 +39,7 @@ L'ApplicationContext exploite le fichier XML [/src/main/resources/spring/beans.x
 
 ## Démonstration
 
-* ```mvn package exec:java```
+* `mvn package exec:java`
 * Suivre les logs dans la console
 * Jouer avec l'interface
 
@@ -51,20 +51,20 @@ L'initialisation des objets va s'appuyer massivement sur les concepts d'introspe
 
 ### Création de l'objet "queue"
 
-```
+```xml
 <bean id="queue" class="java.util.concurrent.ArrayBlockingQueue">
 	<constructor-arg index="0" type="int" value="5" />
 </bean>
 ```
  
-* Récupération de la classe ```java.util.concurrent.ArrayBlockingQueue``` par son nom
-* Récupération du constructeur ```ArrayBlockingQueue(int)``` 
+* Récupération de la classe `java.util.concurrent.ArrayBlockingQueue` par son nom
+* Récupération du constructeur `ArrayBlockingQueue(int)` 
 * Appel du constructeur avec un entier de valeur 5
-* Stockage du bean dans une ```beans: Map<String,Object>```
+* Stockage du bean dans une `beans: Map<String,Object>`
 
 ### Création d'un objet "consumer" de type "Consumer"
 
-```
+```xml
 <bean id="consumer" class="org.acme.ioc.Consumer" 
 	init-method="start" 
 	destroy-method="interrupt"
@@ -73,9 +73,9 @@ L'initialisation des objets va s'appuyer massivement sur les concepts d'introspe
 </bean>
 ```
 
-* Construction d'une instance de la classe ```org.acme.ioc.Consumer```
-* Passage d'une référence au bean "queue" par appel de la méthode ```setQueue```
-* Appel d'une méthode d'initialisation ```start``` (Consumer est un Thread)
+* Construction d'une instance de la classe `org.acme.ioc.Consumer`
+* Passage d'une référence au bean "queue" par appel de la méthode `setQueue`
+* Appel d'une méthode d'initialisation `start` (Consumer est un Thread)
 
 Remarque : 
 
@@ -87,7 +87,7 @@ Remarque :
 L'ApplicationContext peut être manipulé par programmation, par exemple pour récupérer 
 les beans par leur nom.
 
-```
+```java
 Window window = (Window) context.getBean("window");
 window.setVisible(true);
 ```
@@ -109,7 +109,7 @@ peut prendre le contrôle de l'ensemble de l'exécution (Inversion de contrôle)
 
 L'API java intègre un [ServiceLoader](https://docs.oracle.com/javase/7/docs/api/java/util/ServiceLoader.html) qui offre la possibilité de récupérer des instances implémentant une interface.
 
-Les instances à créer pour une interface ```org.acme.Format``` sont listées dans un fichier ```main/resources/META-INF/services/org.acme.Format``` :
+Les instances à créer pour une interface `org.acme.Format` sont listées dans un fichier `main/resources/META-INF/services/org.acme.Format` :
 
 ```
 org.acme.format.WKT

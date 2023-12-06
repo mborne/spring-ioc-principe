@@ -10,7 +10,7 @@ On veut pouvoir **automatiser et configurer la construction d'un ensemble d'obje
 
 ## Solution : Injection de dépendance
 
-* Configurer l'appel aux constructeurs et aux accesseurs qui établissent les relations entre les objets.
+* Laisser le framework appeler les constructeurs et aux accesseurs qui établissent les relations entre les objets.
 * Déléguer la construction des objets et la définition des relations à un framework
 
 ## Exemple (ce code)
@@ -132,14 +132,7 @@ Exemple : [Plugin pour la lecture des shapefile dans Geotools](https://github.co
 * Attention à bien concaténer ces fichiers si vous formez un jar qui embarque un ensemble de dépendances!
 
 
-### Variante en PHP
+## Variante en PHP
 
-Le framework Symfony se repose massivement sur le concept d'injection de dépendances. Par rapport à Spring, nous soulignerons des différences au niveau de la terminologie :
-
-* ApplicationContext (Spring) <~> [ServiceContainerInterface](https://symfony.com/doc/5.4/service_container.html) (Symfony)
-* Bean (Spring) <~> Service (Symfony)
-
-Aussi, en raison du cycle de vie des applications PHP, nous noterons l'absence de la notion de "scope" sur les services.
-
-Plus généralement, nous noterons que la [PSR-11: Container interface](https://www.php-fig.org/psr/psr-11/) vise à unifier l'injection de dépendance pour une meilleure compatibilité entre les différents frameworks PHP (ex : [Laravel](https://laravel.com/docs/9.x/container))
+Le framework Symfony se repose massivement sur le concept d'injection de dépendances.
 
